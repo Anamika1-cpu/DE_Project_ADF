@@ -1,0 +1,42 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "geekcodersadfdevanamika"
+		},
+		"AzureDataLakeStorageSink_properties_typeProperties_url": {
+			"value": "https://geekcoderdatalakesource.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorageSink_properties_typeProperties_tenant": {
+			"value": "ecfba8a3-1b58-424c-ad39-f82546d2af58"
+		},
+		"AzureDataLakeStorageSink_properties_typeProperties_servicePrincipalId": {
+			"value": "11e4df31-9f08-4e30-a9d9-a5c4430a2262"
+		},
+		"AzureDataLakeStorage_Source_properties_typeProperties_url": {
+			"value": "https://geekcoderdatalakesource.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage_Source_properties_typeProperties_tenant": {
+			"value": "ecfba8a3-1b58-424c-ad39-f82546d2af58"
+		},
+		"AzureDataLakeStorage_Source_properties_typeProperties_servicePrincipalId": {
+			"value": "11e4df31-9f08-4e30-a9d9-a5c4430a2262"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://geekeyvaultdevanamika.vault.azure.net/"
+		},
+		"AzureSqlDatabase_source_properties_typeProperties_server": {
+			"value": "geeksqlserver.database.windows.net"
+		},
+		"AzureSqlDatabase_source_properties_typeProperties_database": {
+			"value": "geekSQLdb"
+		},
+		"AzureSqlDatabase_source_properties_typeProperties_userName": {
+			"value": "geek_coder_anamika"
+		},
+		"RestService_Source_properties_typeProperties_url": {
+			"value": "https://api.aviationstack.com/v1/flights?access_key=f443c0ca0e6be7d84ccc37b0cac646fc"
+		}
+	}
+}
