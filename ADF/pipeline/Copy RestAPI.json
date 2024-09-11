@@ -1,0 +1,112 @@
+{
+	"name": "Copy RestAPI",
+	"properties": {
+		"activities": [
+			{
+				"name": "WebActivity",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": true,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "GET",
+					"url": "https://geekeyvaultdevanamika.vault.azure.net/secrets/Api-key/9afea7d96b7f4f7fb3f56a05aa190849?api-version=7.5",
+					"authentication": {
+						"type": "MSI",
+						"resource": " https://vault.azure.net"
+					}
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "WebActivity",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Destination",
+						"value": "@{'raw'}//@{concat('airline','DatePart=',formatDateTime(utcNow(),'yyy-mm-dd'),'Airlines.json')}"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET"
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['data']"
+								},
+								"sink": {
+									"path": "data"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "RestResource_Src",
+						"type": "DatasetReference",
+						"parameters": {
+							"url": {
+								"value": "@activity('WebActivity').output",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Json_source_info",
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": {
+								"value": "@concat('airline','DatePart=',formatDateTime(utcNow(),'yyy-mm-dd'),'Airlines.json')",
+								"type": "Expression"
+							},
+							"container": "raw"
+						}
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2024-09-11T17:26:45Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
